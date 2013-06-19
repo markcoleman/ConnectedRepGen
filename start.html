@@ -5,66 +5,78 @@
 
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/bootstrap-responsive.css" rel="stylesheet" />
+    <style type="text/css">
+        .container-fluid {
+            margin-top: 15px;
+        }
+
+        hr {
+            border-bottom: solid 4px rgb(28, 28, 108);
+        }
+
+        body {
+            background-color: rgb(249, 249, 249);
+        }
+        #confirm address {
+            width: 150px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 
     <div class="container-fluid">
         <div class="row-fluid">
-            <div id="repGenController" ng-controller="RepGenController" class="hero-unit span10 offset1">
-                <h1>Code: {{SessionId}}</h1>
-                <p>
-                    Open up app on the mobile device and enter in the code to link to this repgen.
-                </p>
-                <div ng-show="memberDetails">
-                    <fieldset>
-                        <legend>Name</legend>
-                        <h3>{{memberDetails.FirstName}} {{memberDetails.LastName}}</h3>
-                        <div class="control-group">
-                            <label class="control-label">Birth Date:</label>
-                            <div class="controls">
-                                {{memberDetails.BirthDate | date:'shortDate'}}
+            <div id="repGenController" ng-controller="RepGenController" class="well well-large span10 offset1">
+                <div ng-hide="confirmed">
+                    <h1>Code: {{SessionId}}</h1>
+                    <p class="muted">
+                        Open up app on the mobile device and enter in the code to link to this repgen.
+                    </p>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <h4>Host Information</h4>
+                            <user-details data="dataFromHost"></user-details>
+                        </div>
+                        <div class="span6">
+                            <h4>What Member Has Entered</h4>
+                            <div ng-show="memberDetails">
+                                <user-details data="memberDetails"></user-details>
                             </div>
                         </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Address</legend>
-                        <address>
-                            {{memberDetails.Address.AddressLine1}}<br />
-                            <span ng-show="memberDetails.Address.AddressLine2">{{memberDetails.Address.AddressLine2}}<br />
-                            </span>
-                            {{memberDetails.Address.City}}, {{memberDetails.Address.State}} {{memberDetails.Address.PostalCode}}<br />
-                        </address>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Contact Information</legend>
-                        <div class="control-group">
-                            <label class="control-label">Email:</label>
-                            <div class="controls">
-                                {{memberDetails.Contact.EmailAddress}}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Phone Number:</label>
-                            <div class="controls">
-                                {{memberDetails.Contact.PhoneNumber}}
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="text-center">
-                    <div class="btn-group">
-                        <button class="btn btn-large" ng-click="stop()">Stop</button>
-                        <button class="btn btn-large" ng-click="start()">Start</button>
-                        <button class="btn btn-large" ng-click="finish()">Finish</button>
+                    </div>
+                    <hr />
+                    <div>
+                        <p ng-show="memberDetails.Completed">
+                            Member has confirmed the informatin please click continue.
+                        </p>
+                        <button class="btn btn-large btn-success pull-right" ng-click="confirmed = true" ng-disabled="!memberDetails.Completed">Continue</button>
                     </div>
                 </div>
-
+                <div ng-show="confirmed" id="confirm">
+                    <div class="row-fluid">
+                        <h1>Please Confirm Update</h1>
+                        <div class="alert alert-block alert-info">
+                            <p>
+                                Are you sure you wish to update the host to the following information?
+                            </p>
+                        </div>
+                        <div ng-show="memberDetails">
+                            <user-details data="memberDetails"></user-details>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div>
+                        <button class="btn btn-large pull-left" ng-click="confirmed = false">Cancel</button>
+                        <button class="btn btn-large btn-success pull-right" ng-click="finish()">Update Host</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    
-<script src="http://code.jquery.com/jquery-1.10.1.min.js" type="text/javascript"></script>
+
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js" type="text/javascript"></script>
     <script src="lib/angular.js"></script>
     <script src="js/app.js"></script>
 

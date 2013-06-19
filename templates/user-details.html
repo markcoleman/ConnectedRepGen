@@ -1,0 +1,12 @@
+﻿<address>
+    <strong>{{userDetails.FirstName}} {{userDetails.LastName}}</strong><br>
+    {{userDetails.Address.AddressLine1}}<br />
+    <span ng-show="userDetails.Address.AddressLine2">{{userDetails.Address.AddressLine2}}<br />
+    </span>
+    <span>{{userDetails.Address.City}}, {{userDetails.Address.State}} {{userDetails.Address.PostalCode}}<br />
+    </span>
+    <abbr title="Email">E:</abbr>
+    <span>{{userDetails.Contact.EmailAddress}}</span><br />
+    <abbr title="Phone">P:</abbr>
+    <span>{{userDetails.Contact.PhoneNumber}}</span>
+</address>

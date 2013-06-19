@@ -4,124 +4,168 @@
     <title></title>
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/bootstrap-responsive.css" rel="stylesheet" />
+    <style type="text/css">
+        .container-fluid {
+            margin-top: 15px;
+        }
+
+        hr {
+            border-bottom: solid 4px rgb(28, 28, 108);
+        }
+
+        body {
+            background-color: rgb(249, 249, 249);
+        }
+    </style>
 </head>
 <body>
 
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span10 offset1">
-                <div ng-controller="RemoteRepGenController">
-                    <div ng-hide="memberDetails">
-                        <h1 class="text-center">Enter in Link Id</h1>
-                        <form name="searchForm" class="text-center">
-                            <div class="input-append">
-                                <input type="number" ng-model="SessionId" required name="SessionId" />
-                                <button class="btn" ng-click="linkSession()" ng-disabled="searchForm.$invalid">Link</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div ng-show="memberDetails" class="text-center">
-                        <h4>You are linked to {{SessionId}}</h4>
-                        <button class="btn" ng-click="memberDetails = null">Reset</button>
-                    </div>
-                    <form name="memberDetailsForm" ng-show="memberDetails">
-                        <fieldset>
-                            <legend>Name</legend>
-                            <h3>
-                                <input type="text" ng-model="memberDetails.FirstName" required />
-                                <input type="text" ng-model="memberDetails.LastName" required />
-                            </h3>
-                            <div class="control-group">
-                                <label class="control-label">Birth Date:</label>
-                                <div class="controls">
-                                    <input type="date" ng-model="memberDetails.BirthDate" date-pick class="input-small" required />
+                <div ng-controller="RemoteRepGenController" class="well well-large">
+                    <div ng-hide="finished">
+                        <div ng-hide="memberDetails">
+                            <h1 class="text-center">Enter in Link Id</h1>
+                            <form name="searchForm" class="text-center">
+                                <div class="input-append">
+                                    <input type="number" ng-model="SessionId" required name="SessionId" />
+                                    <button class="btn" ng-click="linkSession()" ng-disabled="searchForm.$invalid">Link</button>
                                 </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Address</legend>
-                            <address>
-                                <input type="text" ng-model="memberDetails.Address.AddressLine1" placeholder="Address Line 1" required /><br />
-                                <input type="text" ng-model="memberDetails.Address.AddressLine2" placeholder="Address Line 2" /><br />
+                            </form>
+                        </div>
+                        <div ng-show="memberDetails" class="text-center">
+                            <h4>You are linked to {{SessionId}}</h4>
+                            <button class="btn" ng-click="memberDetails = null">Reset</button>
+                        </div>
+                        <div ng-hide="confirmed">
+                            <form name="memberDetailsForm" ng-show="memberDetails">
+                                <fieldset>
+                                    <legend>Name</legend>
+                                    <h3>
+                                        <input type="text" ng-model="memberDetails.FirstName" required />
+                                        <input type="text" ng-model="memberDetails.LastName" required />
+                                    </h3>
+                                    <div class="control-group">
+                                        <label class="control-label">Birth Date:</label>
+                                        <div class="controls">
+                                            <input type="date" ng-model="memberDetails.BirthDate" date-pick class="input-small" required />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend>Contact Information</legend>
+                                    <div class="row-fluid">
+                                        <div class="span6">
+                                            <label class="control-label">Address</label>
+                                            <address>
+                                                <input type="text" ng-model="memberDetails.Address.AddressLine1" placeholder="Address Line 1" required /><br />
+                                                <input type="text" ng-model="memberDetails.Address.AddressLine2" placeholder="Address Line 2" /><br />
+                                                <input type="text" class="input-medium" ng-model="memberDetails.Address.City" required />,
+                                                <select name="state" class="input-mini" ng-model="memberDetails.Address.State" required>
+                                                    <option value="AL">AL</option>
+                                                    <option value="AK">AK</option>
+                                                    <option value="AZ">AZ</option>
+                                                    <option value="AR">AR</option>
+                                                    <option value="CA">CA</option>
+                                                    <option value="CO">CO</option>
+                                                    <option value="CT">CT</option>
+                                                    <option value="DE">DE</option>
+                                                    <option value="DC">DC</option>
+                                                    <option value="FL">FL</option>
+                                                    <option value="GA">GA</option>
+                                                    <option value="HI">HI</option>
+                                                    <option value="ID">ID</option>
+                                                    <option value="IL">IL</option>
+                                                    <option value="IN">IN</option>
+                                                    <option value="IA">IA</option>
+                                                    <option value="KS">KS</option>
+                                                    <option value="KY">KY</option>
+                                                    <option value="LA">LA</option>
+                                                    <option value="ME">ME</option>
+                                                    <option value="MD">MD</option>
+                                                    <option value="MA">MA</option>
+                                                    <option value="MI">MI</option>
+                                                    <option value="MN">MN</option>
+                                                    <option value="MS">MS</option>
+                                                    <option value="MO">MO</option>
+                                                    <option value="MT">MT</option>
+                                                    <option value="NE">NE</option>
+                                                    <option value="NV">NV</option>
+                                                    <option value="NH">NH</option>
+                                                    <option value="NJ">NJ</option>
+                                                    <option value="NM">NM</option>
+                                                    <option value="NY">NY</option>
+                                                    <option value="NC">NC</option>
+                                                    <option value="ND">ND</option>
+                                                    <option value="OH">OH</option>
+                                                    <option value="OK">OK</option>
+                                                    <option value="OR">OR</option>
+                                                    <option value="PA">PA</option>
+                                                    <option value="RI">RI</option>
+                                                    <option value="SC">SC</option>
+                                                    <option value="SD">SD</option>
+                                                    <option value="TN">TN</option>
+                                                    <option value="TX">TX</option>
+                                                    <option value="UT">UT</option>
+                                                    <option value="VT">VT</option>
+                                                    <option value="VA">VA</option>
+                                                    <option value="WA">WA</option>
+                                                    <option value="WV">WV</option>
+                                                    <option value="WI">WI</option>
+                                                    <option value="WY">WY</option>
+                                                </select>
 
-                                <input type="text" class="input-medium" ng-model="memberDetails.Address.City" required />,
-                               
-                                <select name="state" class="input-mini" ng-model="memberDetails.Address.State" required>
-                                    <option value="AL">AL</option>
-                                    <option value="AK">AK</option>
-                                    <option value="AZ">AZ</option>
-                                    <option value="AR">AR</option>
-                                    <option value="CA">CA</option>
-                                    <option value="CO">CO</option>
-                                    <option value="CT">CT</option>
-                                    <option value="DE">DE</option>
-                                    <option value="DC">DC</option>
-                                    <option value="FL">FL</option>
-                                    <option value="GA">GA</option>
-                                    <option value="HI">HI</option>
-                                    <option value="ID">ID</option>
-                                    <option value="IL">IL</option>
-                                    <option value="IN">IN</option>
-                                    <option value="IA">IA</option>
-                                    <option value="KS">KS</option>
-                                    <option value="KY">KY</option>
-                                    <option value="LA">LA</option>
-                                    <option value="ME">ME</option>
-                                    <option value="MD">MD</option>
-                                    <option value="MA">MA</option>
-                                    <option value="MI">MI</option>
-                                    <option value="MN">MN</option>
-                                    <option value="MS">MS</option>
-                                    <option value="MO">MO</option>
-                                    <option value="MT">MT</option>
-                                    <option value="NE">NE</option>
-                                    <option value="NV">NV</option>
-                                    <option value="NH">NH</option>
-                                    <option value="NJ">NJ</option>
-                                    <option value="NM">NM</option>
-                                    <option value="NY">NY</option>
-                                    <option value="NC">NC</option>
-                                    <option value="ND">ND</option>
-                                    <option value="OH">OH</option>
-                                    <option value="OK">OK</option>
-                                    <option value="OR">OR</option>
-                                    <option value="PA">PA</option>
-                                    <option value="RI">RI</option>
-                                    <option value="SC">SC</option>
-                                    <option value="SD">SD</option>
-                                    <option value="TN">TN</option>
-                                    <option value="TX">TX</option>
-                                    <option value="UT">UT</option>
-                                    <option value="VT">VT</option>
-                                    <option value="VA">VA</option>
-                                    <option value="WA">WA</option>
-                                    <option value="WV">WV</option>
-                                    <option value="WI">WI</option>
-                                    <option value="WY">WY</option>
-                                </select>
-
-                                <input type="text" maxlength="5" class="input-mini" ng-model="memberDetails.Address.PostalCode" required /><br />
-                            </address>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Contact Information</legend>
-                            <div class="control-group">
-                                <label class="control-label">Email:</label>
-                                <div class="controls">
-                                    <input type="email" ng-model="memberDetails.Contact.EmailAddress" />
+                                                <input type="text" maxlength="5" class="input-mini" ng-model="memberDetails.Address.PostalCode" required /><br />
+                                            </address>
+                                        </div>
+                                        <div class="span6">
+                                            <div class="control-group">
+                                                <label class="control-label">Email</label>
+                                                <div class="controls">
+                                                    <input type="email" ng-model="memberDetails.Contact.EmailAddress" />
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">Phone Number</label>
+                                                <div class="controls">
+                                                    <input type="tel" class="input-small" ng-model="memberDetails.Contact.PhoneNumber" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <hr />
+                                <div>
+                                    <button class="btn btn-large" ng-click="revertChanges()">Revert Changes</button>
+                                    <button class="btn btn-large btn-success pull-right" ng-click="confirmed = true" ng-disabled="memberDetailsForm.$invalid">Complete</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div ng-show="confirmed">
+                            <div class="row-fluid">
+                                <h1>Please Verify Information</h1>
+                                <div class="alert alert-block alert-info">
+                                    <p>
+                                        Is the information below accurate?
+                                    </p>
+                                </div>
+                                <div>
+                                    <user-details data="memberDetails"></user-details>
                                 </div>
                             </div>
-                            <div class="control-group">
-                                <label class="control-label">Phone Number:</label>
-                                <div class="controls">
-                                    <input type="tel" class="input-small" ng-model="memberDetails.Contact.PhoneNumber" />
-                                </div>
+                            <div>
+                                <button class="btn btn-large" ng-click="confirmed = false">Cancel</button>
+                                <button class="btn btn-large btn-success pull-right" ng-click="sendData()" ng-disabled="memberDetailsForm.$invalid">Complete</button>
                             </div>
-                        </fieldset>
-                        <hr />
-                        <button class="btn btn-large" ng-click="linkSession()">Reset</button>
-                        <button class="btn btn-large btn-success pull-right" ng-click="sendData()" ng-disabled="memberDetailsForm.$invalid">Complete</button>
-                    </form>
+                        </div>
+                    </div>
+                    <div ng-show="finished">
+                        <h1>Thank You</h1>
+                        <p>
+                            Your information has been sent to our associate for review and will be updated shortly.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

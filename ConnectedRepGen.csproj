@@ -97,6 +97,7 @@
     <Content Include="lib\jquery.json-2.4.min.js" />
     <Content Include="lib\json2.js" />
     <Content Include="start.html" />
+    <Content Include="templates\user-details.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

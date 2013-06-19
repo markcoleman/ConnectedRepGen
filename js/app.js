@@ -2,15 +2,23 @@
 var connectedRepGen = angular.module("ConnectedRepGen", []);
 
 connectedRepGen.controller("RemoteRepGenController", ["$scope", "$http", function ($scope, $http) {
-    $scope.linkSession = function() {
+    var originalData = {};
+    $scope.linkSession = function () {
         $http.get("/api/session/" + $scope.SessionId).success(function (data) {
+            angular.copy(data, originalData);
             $scope.memberDetails = data;
         });
+    };
+    $scope.revertChanges = function () {
+        angular.copy(originalData, $scope.memberDetails);
     };
 
     $scope.sendData = function () {
         $scope.memberDetails.SessionId = $scope.SessionId;
-        $http.put("/api/session/" + $scope.SessionId, $scope.memberDetails);
+        $scope.memberDetails.Complete = true;
+        $http.put("/api/session/" + $scope.SessionId, $scope.memberDetails).success(function (data) {
+            $scope.finished = true;
+        });
     };
 }]);
 
@@ -18,7 +26,9 @@ connectedRepGen.controller("RepGenController", ["$scope", "$http", "$timeout", "
 
     var mytimeout;
 
-    $scope.startSession = function(dataFromHost) {
+    $scope.startSession = function (dataFromHost) {
+
+        $scope.dataFromHost = dataFromHost;
 
         var promise = $http.post("/api/session", dataFromHost).success(function (data) {
             $scope.SessionId = data.SessionId;
@@ -41,7 +51,7 @@ connectedRepGen.controller("RepGenController", ["$scope", "$http", "$timeout", "
 
 
     };
-    
+
     $scope.$on('$destroy', function (e) {
 
     });
@@ -71,6 +81,19 @@ connectedRepGen.directive('datePick', function (dateFilter) {
                 var retVal = dateFilter(modelValue, "MM/dd/yyyy");
                 return retVal;
             });
+        }
+    };
+});
+connectedRepGen.directive("userDetails", function () {
+    return {
+        restrict: "E",
+        scope: {
+            userDetails: "=data"
+        },
+        replace: true,
+        templateUrl: "templates/user-details.html",
+        link: function (scope) {
+            var s = scope;
         }
     };
 });
