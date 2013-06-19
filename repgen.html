@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        iframe {
+            width: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <fieldset>
+        <legend>Symitar Form Data</legend>
+        <form name="symitarForm">
+            Name
+                      <input type="text" id="memberDetails.FirstName" />
+            <input type="text" id="memberDetails.LastName" />
+            Birth Date:
+                      <input type="date" id="memberDetails.BirthDate" />
+            Address
+                      <input type="text" id="memberDetails.Address.AddressLine1" /><br />
+            <input type="text" id="memberDetails.Address.AddressLine2" /><br />
+
+            <input id="memberDetails.Address.City" type="text" />,
+                               
+                      <input id="memberDetails.Address.State" type="text" />,         
+
+                      <input type="text" id="memberDetails.Address.PostalCode" /><br />
+            Contact Information
+                      Email:
+                      <input type="email" id="memberDetails.Contact.EmailAddress" />
+            Phone Number:
+                      <input type="tel" id="memberDetails.Contact.PhoneNumber" />
+
+        </form>
+    </fieldset>
+
+    <iframe id="start" src="http://localhost:1157/start.html"></iframe>
+</body>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js" type="text/javascript"></script>
+
+<script src="http://localhost:1157/lib/jquery.json-2.4.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("iframe").height($(window).height());
+    });
+    var data = {
+        FirstName: "John",
+        MiddleName: null,
+        LastName: "Smith",
+        BirthDate: "2013-12-01T00:00:00",
+        Contact: {
+            EmailAddress: "asdfsa@saf.com",
+            PhoneNumber: "7177777777"
+        },
+        Address: {
+            AddressLine1: "123 Fake Street",
+            AddressLine2: "",
+            City: "Fake Town",
+            State: "CT",
+            PostalCode: "12345"
+        },
+        Complete: false
+    };
+
+    setTimeout(function () {
+        $("#start")[0].contentWindow.postMessage($.toJSON(data), "*");
+    }, 500);
+
+    (function () {
+        if (window.attachEvent) {
+            window.attachEvent('onmessage', message);
+        }
+        else {
+            window.addEventListener("message", message, false);
+        }
+        function message(event) {
+            var memberDetails = $.parseJSON(event.data);
+
+            document.getElementById("memberDetails.FirstName").value = memberDetails.FirstName;
+            document.getElementById("memberDetails.LastName").value = memberDetails.LastName;
+            document.getElementById("memberDetails.BirthDate").value = memberDetails.BirthDate;
+            document.getElementById("memberDetails.Contact.PhoneNumber").value = memberDetails.Contact.PhoneNumber;
+            document.getElementById("memberDetails.Contact.EmailAddress").value = memberDetails.Contact.EmailAddress;
+            document.getElementById("memberDetails.Address.AddressLine1").value = memberDetails.Address.AddressLine1;
+            document.getElementById("memberDetails.Address.AddressLine2").value = memberDetails.Address.AddressLine2;
+            document.getElementById("memberDetails.Address.City").value = memberDetails.Address.City;
+            document.getElementById("memberDetails.Address.State").value = memberDetails.Address.State;
+            document.getElementById("memberDetails.Address.PostalCode").value = memberDetails.Address.PostalCode;
+
+
+        }
+    })();
+
+
+</script>
+</html>
