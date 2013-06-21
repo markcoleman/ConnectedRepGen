@@ -6,7 +6,7 @@ connectedRepGen.controller("RemoteRepGenController", ["$scope", "$http", functio
     $scope.linkSession = function () {
         $http.get("/api/session/" + $scope.SessionId).success(function (data) {
             angular.copy(data, originalData);
-            $scope.memberDetails = data;
+            $scope.repgenSession = data;
         });
     };
     $scope.revertChanges = function () {
@@ -14,11 +14,14 @@ connectedRepGen.controller("RemoteRepGenController", ["$scope", "$http", functio
     };
 
     $scope.sendData = function () {
-        $scope.memberDetails.SessionId = $scope.SessionId;
-        $scope.memberDetails.Complete = true;
-        $http.put("/api/session/" + $scope.SessionId, $scope.memberDetails).success(function (data) {
+        $scope.repgenSession.Id = $scope.SessionId;
+        $scope.repgenSession.Complete = true;
+        $http.put("/api/session/" + $scope.SessionId, $scope.repgenSession).success(function (data) {
             $scope.finished = true;
         });
+    };
+    $scope.restart = function() {
+        location.reload();
     };
 }]);
 
@@ -37,7 +40,7 @@ connectedRepGen.controller("RepGenController", ["$scope", "$http", "$timeout", "
 
         $scope.onTimeout = function () {
             $http.get("/api/session/" + $scope.SessionId).success(function (data) {
-                $scope.memberDetails = data;
+                $scope.repgenSession = data;
             }).then(function () {
                 mytimeout = $timeout($scope.onTimeout, 5000);
             });
@@ -65,7 +68,7 @@ connectedRepGen.controller("RepGenController", ["$scope", "$http", "$timeout", "
     };
 
     $scope.finish = function () {
-        $window.parent.postMessage($.toJSON($scope.memberDetails), '*')
+        $window.parent.postMessage($.toJSON($scope.repgenSession), '*')
     };
 
 }]);

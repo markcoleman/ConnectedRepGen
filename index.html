@@ -25,31 +25,31 @@
             <div class="span10 offset1">
                 <div ng-controller="RemoteRepGenController" class="well well-large">
                     <div ng-hide="finished">
-                        <div ng-hide="memberDetails">
-                            <h1 class="text-center">Enter in Link Id</h1>
-                            <form name="searchForm" class="text-center">
-                                <div class="input-append">
-                                    <input type="number" ng-model="SessionId" required name="SessionId" />
-                                    <button class="btn" ng-click="linkSession()" ng-disabled="searchForm.$invalid">Link</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div ng-show="memberDetails" class="text-center">
-                            <h4>You are linked to {{SessionId}}</h4>
-                            <button class="btn" ng-click="memberDetails = null">Reset</button>
-                        </div>
                         <div ng-hide="confirmed">
-                            <form name="memberDetailsForm" ng-show="memberDetails">
+                            <div ng-hide="repgenSession.MemberDetails">
+                                <h1 class="text-center">Enter in Link Id</h1>
+                                <form name="searchForm" class="text-center">
+                                    <div class="input-append">
+                                        <input type="number" ng-model="SessionId" required name="SessionId" />
+                                        <button class="btn" ng-click="linkSession()" ng-disabled="searchForm.$invalid">Link</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div ng-show="repgenSession.MemberDetails" class="text-center">
+                                <h4>You are linked to {{repgenSession.AssociateName}}</h4>
+                                <button class="btn" ng-click="repgenSession = null">Reset</button>
+                            </div>
+                            <form name="memberDetailsForm" ng-show="repgenSession.MemberDetails">
                                 <fieldset>
                                     <legend>Name</legend>
                                     <h3>
-                                        <input type="text" ng-model="memberDetails.FirstName" required />
-                                        <input type="text" ng-model="memberDetails.LastName" required />
+                                        <input type="text" ng-model="repgenSession.MemberDetails.FirstName" required />
+                                        <input type="text" ng-model="repgenSession.MemberDetails.LastName" required />
                                     </h3>
                                     <div class="control-group">
                                         <label class="control-label">Birth Date:</label>
                                         <div class="controls">
-                                            <input type="date" ng-model="memberDetails.BirthDate" date-pick class="input-small" required />
+                                            <input type="date" ng-model="repgenSession.MemberDetails.BirthDate" date-pick class="input-small" required />
                                         </div>
                                     </div>
                                 </fieldset>
@@ -59,10 +59,10 @@
                                         <div class="span6">
                                             <label class="control-label">Address</label>
                                             <address>
-                                                <input type="text" ng-model="memberDetails.Address.AddressLine1" placeholder="Address Line 1" required /><br />
-                                                <input type="text" ng-model="memberDetails.Address.AddressLine2" placeholder="Address Line 2" /><br />
-                                                <input type="text" class="input-medium" ng-model="memberDetails.Address.City" required />,
-                                                <select name="state" class="input-mini" ng-model="memberDetails.Address.State" required>
+                                                <input type="text" ng-model="repgenSession.MemberDetails.Address.AddressLine1" placeholder="Address Line 1" required /><br />
+                                                <input type="text" ng-model="repgenSession.MemberDetails.Address.AddressLine2" placeholder="Address Line 2" /><br />
+                                                <input type="text" class="input-medium" ng-model="repgenSession.MemberDetails.Address.City" required />,
+                                                <select name="state" class="input-mini" ng-model="repgenSession.MemberDetails.Address.State" required>
                                                     <option value="AL">AL</option>
                                                     <option value="AK">AK</option>
                                                     <option value="AZ">AZ</option>
@@ -116,20 +116,20 @@
                                                     <option value="WY">WY</option>
                                                 </select>
 
-                                                <input type="text" maxlength="5" class="input-mini" ng-model="memberDetails.Address.PostalCode" required /><br />
+                                                <input type="text" maxlength="5" class="input-mini" ng-model="repgenSession.MemberDetails.Address.PostalCode" required /><br />
                                             </address>
                                         </div>
                                         <div class="span6">
                                             <div class="control-group">
                                                 <label class="control-label">Email</label>
                                                 <div class="controls">
-                                                    <input type="email" ng-model="memberDetails.Contact.EmailAddress" />
+                                                    <input type="email" ng-model="repgenSession.MemberDetails.Contact.EmailAddress" />
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">Phone Number</label>
                                                 <div class="controls">
-                                                    <input type="tel" class="input-small" ng-model="memberDetails.Contact.PhoneNumber" />
+                                                    <input type="tel" class="input-small" ng-model="repgenSession.MemberDetails.Contact.PhoneNumber" />
                                                 </div>
                                             </div>
                                         </div>
@@ -151,7 +151,7 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <user-details data="memberDetails"></user-details>
+                                    <user-details data="repgenSession.MemberDetails"></user-details>
                                 </div>
                             </div>
                             <div>
@@ -165,6 +165,10 @@
                         <p>
                             Your information has been sent to our associate for review and will be updated shortly.
                         </p>
+                        <hr />
+                        <div class="text-center">
+                            <button class="btn btn-large btn-success" ng-click="restart()">Start New Sesssion</button>
+                        </div>
                     </div>
                 </div>
             </div>

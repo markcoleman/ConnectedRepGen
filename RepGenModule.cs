@@ -17,7 +17,7 @@ namespace ConnectedRepGen
 
             Post["/Session"] = parameters =>
                                    {
-                                       var memberInformation = this.Bind<MemberInformation>();
+                                       var memberInformation = this.Bind<RepgenSession>();
                                        var documentSession = Global.Store.OpenSession();
                                        documentSession.Store(memberInformation);
                                        documentSession.SaveChanges();
@@ -26,17 +26,17 @@ namespace ConnectedRepGen
 
                                        return Response.AsJson(new
                                                                   {
-                                                                      SessionId = memberInformation.Id.Replace("MemberInformations/", "")
+                                                                      SessionId = memberInformation.Id.Replace("RepgenSessions/", "")
                                                                   }, HttpStatusCode.Created);
                                    };
 
             Get["/Session/{sessionId}"] = parameters =>
                                               {
-                                                  string sessionId = "MemberInformations/" + parameters.sessionId;
+                                                  string sessionId = "RepgenSessions/" + parameters.sessionId;
 
-                                                  
+
                                                   var session = Global.Store.OpenSession();
-                                                  var memberInformation = session.Load<MemberInformation>(sessionId);
+                                                  var memberInformation = session.Load<RepgenSession>(sessionId);
 
                                                   session.Dispose();
 
@@ -45,20 +45,20 @@ namespace ConnectedRepGen
 
             Put["/Session/{sessionId}"] = parameters =>
                                               {
-                                                  string sessionId = "MemberInformations/" + parameters.sessionId;
+                                                  string sessionId = "RepgenSessions/" + parameters.sessionId;
 
-                                                  var updatedMemberInformation = this.Bind<MemberInformation>();
+                                                  var updatedSession = this.Bind<RepgenSession>();
 
                                                   var session = Global.Store.OpenSession();
-                                                  var memberInformation = session.Load<MemberInformation>(sessionId);
+                                                  var repgenSession = session.Load<RepgenSession>(sessionId);
 
-                                                  memberInformation.FirstName = updatedMemberInformation.FirstName;
-                                                  memberInformation.LastName = updatedMemberInformation.LastName;
-                                                  memberInformation.MiddleName = updatedMemberInformation.MiddleName;
-                                                  memberInformation.BirthDate = updatedMemberInformation.BirthDate;
-                                                  memberInformation.Contact = updatedMemberInformation.Contact;
-                                                  memberInformation.Address = updatedMemberInformation.Address;
-
+                                                  repgenSession.MemberDetails.FirstName = updatedSession.MemberDetails.FirstName;
+                                                  repgenSession.MemberDetails.LastName = updatedSession.MemberDetails.LastName;
+                                                  repgenSession.MemberDetails.MiddleName = updatedSession.MemberDetails.MiddleName;
+                                                  repgenSession.MemberDetails.BirthDate = updatedSession.MemberDetails.BirthDate;
+                                                  repgenSession.MemberDetails.Contact = updatedSession.MemberDetails.Contact;
+                                                  repgenSession.MemberDetails.Address = updatedSession.MemberDetails.Address;
+                                                  repgenSession.Complete = updatedSession.Complete;
                                                   session.SaveChanges();
 
                                                   session.Dispose();
@@ -70,17 +70,21 @@ namespace ConnectedRepGen
 
         }
     }
-
-    public class MemberInformation
+    public class RepgenSession
     {
         public string Id { get; set; }
+        public string AssociateName { get; set; }
+        public MemberDetails MemberDetails { get; set; }
+        public bool Complete { get; set; }
+    }
+    public class MemberDetails
+    {
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public ContactInformation Contact { get; set; }
         public Address Address { get; set; }
-        public bool Complete { get; set; }
     }
 
     public class Address

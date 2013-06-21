@@ -36,21 +36,21 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <h4>Host Information</h4>
-                            <user-details data="dataFromHost"></user-details>
+                            <user-details data="dataFromHost.MemberDetails"></user-details>
                         </div>
                         <div class="span6">
                             <h4>What Member Has Entered</h4>
-                            <div ng-show="memberDetails">
-                                <user-details data="memberDetails"></user-details>
+                            <div ng-show="repgenSession.MemberDetails">
+                                <user-details data="repgenSession.MemberDetails"></user-details>
                             </div>
                         </div>
                     </div>
                     <hr />
                     <div>
-                        <p ng-show="memberDetails.Completed">
+                        <p ng-show="repgenSession.Completed">
                             Member has confirmed the informatin please click continue.
                         </p>
-                        <button class="btn btn-large btn-success pull-right" ng-click="confirmed = true" ng-disabled="!memberDetails.Completed">Continue</button>
+                        <button class="btn btn-large btn-success pull-right" ng-click="confirmed = true" ng-disabled="!repgenSession.Complete">Continue</button>
                     </div>
                 </div>
                 <div ng-show="confirmed" id="confirm">
@@ -61,8 +61,8 @@
                                 Are you sure you wish to update the host to the following information?
                             </p>
                         </div>
-                        <div ng-show="memberDetails">
-                            <user-details data="memberDetails"></user-details>
+                        <div ng-show="repgenSession.MemberDetails">
+                            <user-details data="repgenSession.MemberDetails"></user-details>
                         </div>
                     </div>
                     <hr/>

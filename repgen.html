@@ -49,20 +49,23 @@
         $("iframe").height($(window).height());
     });
     var data = {
-        FirstName: "John",
-        MiddleName: null,
-        LastName: "Smith",
-        BirthDate: "2013-12-01T00:00:00",
-        Contact: {
-            EmailAddress: "asdfsa@saf.com",
-            PhoneNumber: "7177777777"
-        },
-        Address: {
-            AddressLine1: "123 Fake Street",
-            AddressLine2: "",
-            City: "Fake Town",
-            State: "CT",
-            PostalCode: "12345"
+        AssociateName: "Mark Coleman",
+        MemberDetails: {
+            FirstName: "John",
+            MiddleName: null,
+            LastName: "Smith",
+            BirthDate: "2013-12-01T00:00:00",
+            Contact: {
+                EmailAddress: "asdfsa@saf.com",
+                PhoneNumber: "7177777777"
+            },
+            Address: {
+                AddressLine1: "123 Fake Street",
+                AddressLine2: "",
+                City: "Fake Town",
+                State: "CT",
+                PostalCode: "12345"
+            }
         },
         Complete: false
     };
@@ -79,7 +82,7 @@
             window.addEventListener("message", message, false);
         }
         function message(event) {
-            var memberDetails = $.parseJSON(event.data);
+            var memberDetails = $.parseJSON(event.data).MemberDetails;
 
             document.getElementById("memberDetails.FirstName").value = memberDetails.FirstName;
             document.getElementById("memberDetails.LastName").value = memberDetails.LastName;
