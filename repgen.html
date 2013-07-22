@@ -5,45 +5,31 @@
     <meta charset="utf-8" />
     <title></title>
     <style type="text/css">
-        iframe {
+        iframe
+        {
             width: 100%;
             border: none;
         }
     </style>
 </head>
 <body>
-
-    <fieldset>
-        <legend>Symitar Form Data</legend>
-        <form name="symitarForm">
-            Name
-                      <input type="text" id="memberDetails.FirstName" />
-            <input type="text" id="memberDetails.LastName" />
-            Birth Date:
-                      <input type="date" id="memberDetails.BirthDate" />
-            Address
-                      <input type="text" id="memberDetails.Address.AddressLine1" /><br />
-            <input type="text" id="memberDetails.Address.AddressLine2" /><br />
-
-            <input id="memberDetails.Address.City" type="text" />,
-                               
-                      <input id="memberDetails.Address.State" type="text" />,         
-
-                      <input type="text" id="memberDetails.Address.PostalCode" /><br />
-            Contact Information
-                      Email:
-                      <input type="email" id="memberDetails.Contact.EmailAddress" />
-            Phone Number:
-                      <input type="tel" id="memberDetails.Contact.PhoneNumber" />
-
-        </form>
-    </fieldset>
-
-    <iframe id="start" src="http://localhost:1157/start.html"></iframe>
+    <form id="symitarForm" name="symitarForm" method="POST" action="symitar://HTMLView~Action=Post">
+        <input type="hidden" id="memberDetails.FirstName" name="FirstName" />
+        <input type="hidden" id="memberDetails.LastName" name="LastName" />
+        <input type="hidden" id="memberDetails.BirthDate" name="BirthDate" />
+        <input type="hidden" id="memberDetails.Address.AddressLine1" name="AddressLine1" />
+        <input type="hidden" id="memberDetails.Address.AddressLine2" name="AddressLine2" />
+        <input type="hidden" id="memberDetails.Address.City" name="City" />  
+        <input type="hidden"  id="memberDetails.Address.State" name="State" />  
+        <input type="hidden" id="memberDetails.Address.PostalCode" name="PostalCode" />
+        <input type="hidden" id="memberDetails.Contact.EmailAddress" name="EmailAddress" />
+        <input type="hidden" id="memberDetails.Contact.PhoneNumber" name="PhoneNumber" />
+    </form>
+    <iframe id="start" src="http://itsdevp1006/start.html"></iframe>
 </body>
-<script src="http://code.jquery.com/jquery-1.10.1.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
 
-<script src="http://localhost:1157/lib/jquery.json-2.4.min.js"></script>
+<script src="http://itsdevp1006/lib/jquery.json-2.4.min.js"></script>
 <script type="text/javascript">
     $(function () {
         $("iframe").height($(window).height());
@@ -94,8 +80,9 @@
             document.getElementById("memberDetails.Address.City").value = memberDetails.Address.City;
             document.getElementById("memberDetails.Address.State").value = memberDetails.Address.State;
             document.getElementById("memberDetails.Address.PostalCode").value = memberDetails.Address.PostalCode;
-
-
+            alert(document.getElementById("memberDetails.Address.PostalCode").value);
+            alert($('#symitarForm'));
+            $('#symitarForm').submit();
         }
     })();
 

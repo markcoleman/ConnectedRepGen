@@ -40,7 +40,7 @@ namespace ConnectedRepGen
 
                                                   session.Dispose();
 
-                                                  return Response.AsJson(memberInformation);
+                                                  return Response.AsJson(memberInformation).WithHeader("Cache-Control", "no-store");
                                               };
 
             Put["/Session/{sessionId}"] = parameters =>
@@ -67,6 +67,8 @@ namespace ConnectedRepGen
                                               };
 
 
+
+            After.AddItemToEndOfPipeline(ctx => ctx.Response.WithHeader("Cache-Control", "no-store"));
 
         }
     }

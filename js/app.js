@@ -4,7 +4,7 @@ var connectedRepGen = angular.module("ConnectedRepGen", []);
 connectedRepGen.controller("RemoteRepGenController", ["$scope", "$http", function ($scope, $http) {
     var originalData = {};
     $scope.linkSession = function () {
-        $http.get("/api/session/" + $scope.SessionId).success(function (data) {
+        $http.get("api/session/" + $scope.SessionId).success(function (data) {
             angular.copy(data, originalData);
             $scope.repgenSession = data;
         });
@@ -16,7 +16,7 @@ connectedRepGen.controller("RemoteRepGenController", ["$scope", "$http", functio
     $scope.sendData = function () {
         $scope.repgenSession.Id = $scope.SessionId;
         $scope.repgenSession.Complete = true;
-        $http.put("/api/session/" + $scope.SessionId, $scope.repgenSession).success(function (data) {
+        $http.put("api/session/" + $scope.SessionId, $scope.repgenSession).success(function (data) {
             $scope.finished = true;
         });
     };
@@ -33,22 +33,22 @@ connectedRepGen.controller("RepGenController", ["$scope", "$http", "$timeout", "
 
         $scope.dataFromHost = dataFromHost;
 
-        var promise = $http.post("/api/session", dataFromHost).success(function (data) {
+        var promise = $http.post("api/session", dataFromHost).success(function (data) {
             $scope.SessionId = data.SessionId;
         });
 
 
         $scope.onTimeout = function () {
-            $http.get("/api/session/" + $scope.SessionId).success(function (data) {
+            $http.get("api/session/" + $scope.SessionId).success(function (data) {
                 $scope.repgenSession = data;
             }).then(function () {
-                mytimeout = $timeout($scope.onTimeout, 5000);
+                mytimeout = $timeout($scope.onTimeout, 1000);
             });
         };
 
 
         promise.then(function () {
-            mytimeout = $timeout($scope.onTimeout, 5000);
+            mytimeout = $timeout($scope.onTimeout, 1000);
         });
 
 

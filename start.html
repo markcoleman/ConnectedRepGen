@@ -1,7 +1,10 @@
 ﻿<!DOCTYPE html>
-<html ng-app="ConnectedRepGen" xmlns="http://www.w3.org/1999/xhtml">
+<html id="ng-app" ng-app="ConnectedRepGen" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+    <!--[if lte IE 8]>
+    <script src="lib/json2.js"></script>
+    <![endif]-->
 
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/bootstrap-responsive.css" rel="stylesheet" />
@@ -76,11 +79,11 @@
     </div>
 
 
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js" type="text/javascript"></script>
-    <script src="lib/angular.js"></script>
-    <script src="js/app.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="http://itsdevp1006/lib/angular.js"></script>
+    <script src="http://itsdevp1006/js/app.js"></script>
 
-    <script src="lib/jquery.json-2.4.min.js"></script>
+    <script src="http://itsdevp1006/lib/jquery.json-2.4.min.js"></script>
     <script type="text/javascript">
 
         (function () {
@@ -92,11 +95,10 @@
             }
             function message(event) {
                 var messageParams = $.parseJSON(event.data);
-
                 var scope = angular.element($("#repGenController")).scope();
-                scope.$apply(function () {
+                scope.$apply(function() {
                     scope.startSession(messageParams);
-                })
+                });
             }
         })();
 
